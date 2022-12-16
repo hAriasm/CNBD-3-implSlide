@@ -1,0 +1,127 @@
+% Template:     Auxiliares LaTeX
+% Documento:    Funciones exclusivas de Template-Auxiliar
+% Versión:      DEV
+% Codificación: UTF-8
+%
+% Autor: Pablo Pizarro R.
+%        pablo@ppizarror.com
+%
+% Manual template: [https://latex.ppizarror.com/auxiliares]
+% Licencia MIT:    [https://opensource.org/licenses/MIT]
+
+% COMPILACION
+% - environments.tex -> {references, anexo, columna}
+
+% Configuraciones base
+\def\anumsecaddtocounter {false}
+\newcounter{totalquestions}
+\setcounter{totalquestions}{1}
+
+% Insertar nuevo título de pregunta
+%	#1	Título
+\newcommand{\newquestion}[1]{%
+	\emptyvarerr{\newquestion}{#1}{Titulo pregunta no definido}%
+	\sectionanum{#1}%
+}
+
+% Insertar nuevo título de pregunta encerrado en un recuadro
+%	#1	Número pregunta
+\newcommand{\newboxquestion}[1]{%
+	\emptyvarerr{\newquestion}{#1}{Titulo pregunta no definido}%
+	\phantomsection%
+	\newp \fbox{\ \textbf{#1}.-\ } \noindent%
+	\pdfbookmark{#1}{question.\thetotalquestions}%
+	\stepcounter{totalquestions}%
+}
+
+% Crea un entorno para definir el tamaño de bloque
+%	#1	Tamaño de fuente en pt
+\newenvironment{fontsizeblock}[1][\documentfontsize]{
+	\changefontsizes{#1 pt}
+}{
+	\changefontsizes{\documentfontsize pt}
+}
+
+% Crea una sección de imágenes múltiples
+%	#1	Label (opcional)
+%	#2	Caption
+\newenvironment{images}[2][]{%
+	% Modifica globales
+	\def\envimageslabelvar {#1}%
+	\def\envimagescaptionvar {#2}%
+	\def\GLOBALenvimageinitialized {true}%
+	\def\GLOBALenvimageadded {false}%
+	
+	% Configura caption y márgenes
+	\corevspacevarcm{\marginimagetop}%
+	\setcaptionmargincm{\captionmarginmultimg} % Eso es para los wrapfig
+	
+	% Inicia la figura
+	\begin{samepage}%
+	\begin{figure}[H] \centering%
+		\corevspacevarcm{\marginimagemulttop}%
+		}{%
+		\setcaptionmargincm{\captionlrmargin}%
+		\ifthenelse{\equal{\envimagescaptionvar}{}}{ % \ifx\hfuzz no sirve
+			\corevspacevarcm{\captionlessmarginimage}%
+		}{%
+			\corevspacevarcm{\captionmarginimages}%
+			\caption{\envimagescaptionvar\envimageslabelvar}%
+		}%
+	\end{figure}
+
+	% Restablece caption y márgenes
+	\setcaptionmargincm{\captionlrmargin}%
+	\corevspacevarcm{\marginimagebottom}%
+	\end{samepage}
+	
+	% Restablece globales
+	\def\GLOBALenvimageinitialized {false}%
+}
+
+% Crea una sección de imágenes múltiples completa dentro de un multicol
+%	#1	Label (opcional)
+%	#2	Posición de la imagen, "bottom", "top"
+%	#3	Caption
+\newenvironment{imagesmc}[3][]{%
+	% Modifica globales
+	\def\envimageslabelvar {#1}%
+	\def\envimagesmcpos {#2}%
+	\def\envimagescaptionvar {#3}%
+	\global\def\GLOBALenvimageinitialized {true}%
+	\global\def\GLOBALenvimageadded {false}%
+	\checkinsidemulticol%
+	\checkoutsideappendix%
+	
+	% Configura caption y márgenes
+	\setcaptionmargincm{\captionmarginmultimg} % Eso es para los wrapfig
+	
+	% Inicia la figura
+	\ifthenelse{\equal{#2}{bottom}}{%
+		\begin{figure*}[b] \centering%
+	}{%
+	\ifthenelse{\equal{#2}{top}}{%
+		\begin{figure*}[t] \centering%
+	}{%
+		\errmessage{LaTeX Warning: Posicion de imagen invalida, valores esperados: bottom,top}
+		\stop
+	}}%
+		\corevspacevarcm{\marginimagemulttop}%
+	}{%
+		\setcaptionmargincm{\captionlrmargin}%
+		\ifthenelse{\equal{\envimagescaptionvar}{}}{%
+			\corevspacevarcm{\captionlessmarginimage}%
+		}{%
+			\ifthenelse{\equal{\captionmarginimagesmc}{0}}{}{\corevspacevarcm{\captionmarginimagesmc}}%
+			\caption{\envimagescaptionvar\envimageslabelvar}%
+		}%
+	\end{figure*}
+	
+	% Restablece caption y márgenes
+	\setcaptionmargincm{\captionlrmarginmc}%
+	
+	% Restablece globales
+	\global\def\GLOBALenvimageinitialized {false}%
+}
+
+% END

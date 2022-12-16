@@ -1,0 +1,81 @@
+% Template:     Informe LaTeX
+% Documento:    Archivo principal
+% Versión:      8.1.7 (24/07/2022)
+% Codificación: UTF-8
+%
+% Autor: Pablo Pizarro R.
+%        pablo@ppizarror.com
+%
+% Manual template: [https://latex.ppizarror.com/informe]
+% Licencia MIT:    [https://opensource.org/licenses/MIT]
+
+% CREACIÓN DEL DOCUMENTO
+\documentclass[
+	spanish, % Idioma: spanish, english, etc.
+	letterpaper, oneside
+]{article}
+
+% INFORMACIÓN DEL DOCUMENTO
+\def\documenttitle {Informe 01: Caso de estudio}
+\def\documentsubtitle {}
+\def\documentsubject {\LARGE Amazon }
+
+\def\documentauthor {Nombre del autor}
+\def\coursename {Computación en la Nube y Big Data}
+\def\coursecode {MCC-03}
+
+\def\universityname {Universidad Nacional de San Agustín}
+\def\universityfaculty {Escuela de Posgrado}
+\def\universitydepartment {Maestría en Ciencia de la Computación}
+\def\universitydepartmentimage {departamentos/logo_unsa}
+\def\universitydepartmentimagecfg {height=1.57cm}
+\def\universitylocation {Arequipa, Perú}
+
+% INTEGRANTES, PROFESORES Y FECHAS
+\def\authortable {
+\begin{tabular}{ll}
+	Integrantes:
+	& \begin{tabular}[t]{l}
+		Fredy Abel Huanca Torres \\
+		Henrry Ivan Arias Mamani \\
+		Jose Edison Pérez Mamani
+	\end{tabular} \\
+	Profesor:
+	& \begin{tabular}[t]{l}
+		Alvaro Henrry Mamani Aliaga
+	\end{tabular} \\
+	\multicolumn{2}{l}{Fecha de realización: \today} \\
+	\multicolumn{2}{l}{Fecha de entrega: \today} \\
+	\multicolumn{2}{l}{\universitylocation}
+\end{tabular}
+}
+
+% IMPORTACIÓN DEL TEMPLATE
+\input{template}
+
+% INICIO DE PÁGINAS
+\begin{document}
+	
+% PORTADA
+\templatePortrait
+
+% CONFIGURACIÓN DE PÁGINA Y ENCABEZADOS
+\templatePagecfg
+
+% RESUMEN O ABSTRACT
+\begin{abstractd}
+	El presente, es un informe sobre un caso de estudio: Amazon inc. el mismo que ha usado el framework Hadoop para el procesamiento y almacenamiento de los datos que generan, son soportados por artículos de investigación y datos obtenidos de recursos de internet, el cual ha servidor para realizar este informe, asimismo consideramos el volumen, variedad, velocidad y veracidad de los datos que procesa.
+\end{abstractd}
+
+% TABLA DE CONTENIDOS - ÍNDICE
+\templateIndex
+
+% CONFIGURACIONES FINALES
+\templateFinalcfg
+
+% ======================= INICIO DEL DOCUMENTO =======================
+
+\input{src/etc/body} % Ejemplo, se puede borrar
+
+% FIN DEL DOCUMENTO
+\end{document} 
